@@ -562,13 +562,18 @@ var rtc = (function() {
     },
     init: function(pad) {
       self._pad = pad || window.pad;
+
+      // if a URL Parameter is set then activate
+      if (self.avInURL()) {
+        self.activate();
+      } else {
+        return;
+      }
+
       var rtcEnabled = padcookie.getPref("rtcEnabled");
       if (typeof rtcEnabled == "undefined") {
         rtcEnabled = $("#options-enablertc").prop("checked");
       }
-
-      // if a URL Parameter is set then activate
-      if (self.avInURL()) self.activate();
 
       if (clientVars.webrtc.listenClass) {
         $(clientVars.webrtc.listenClass).on("click", function() {
